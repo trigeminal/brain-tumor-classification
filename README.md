@@ -1,9 +1,13 @@
 # Brain Tumor Classification
 
+>  Disclaimer: The models used in this project are not fully optimized. They are currently in an experimental stage and will be re-trained and fine-tuned as soon as possible. The results and predictions provided by the current models should be interpreted with caution and are not intended for clinical or diagnostic use.
+
 > Dataset used: **[Brain MRI Images](datasets/raw/)**  
 > Notebooks: **[Models](https://nbviewer.org/github/trigeminal/brain-tumor-classification/blob/main/notebooks/model.ipynb)**
 
-Explores the effectiveness of various pre-trained Convolutional Neural Networks (CNNs) for classifying brain MRI images as containing a tumor or not. This project aims to leverage the power of deep learning and transfer learning techniques to accurately identify the presence of brain tumors in MRI scans. By utilizing pre-trained models such as **VGG16**, **MobileNetV2**, and **DenseNet121**, we can compare their performance and determine the most effective model for this classification task. The project includes data preprocessing, augmentation, model training, evaluation, and visualization of results to provide a comprehensive analysis of each model's capabilities.
+This project explores the effectiveness of various pre-trained Convolutional Neural Networks (CNNs) for classifying brain MRI images as containing a tumor or not. It leverages deep learning and transfer learning techniques to accurately identify the presence of brain tumors in MRI scans. The project includes:
+1. **Notebook-based Model Training**: Training and evaluation of pre-trained models like **VGG16**, **MobileNetV2**, and **DenseNet121**.
+2. **Flask API**: A Flask application for serving predictions using the trained DenseNet121 model.
 
 ## Models Used
 
@@ -38,6 +42,41 @@ The models are trained using the training dataset and evaluated on the testing d
 The performance of each model is evaluated based on accuracy and loss metrics for both training and validation datasets. The results are visualized using matplotlib plots.
 
 ![Model Performance](docs/img/viz1.png)
+
+---
+
+# Flask API
+
+The Flask API provides a modularized and scalable way to serve predictions using the trained DenseNet121 model. It allows users to upload an MRI image and receive a prediction in JSON format.
+
+To start the Flask API, run the following command:
+
+```bash
+python main.py
+```
+
+The API will be available at `http://localhost:5000`.
+
+## API Endpoints
+
+- **POST** `/predict`: Accepts an image file and returns the predicted class, confidence, and confidence percentage.
+
+**Request Example**:
+
+```bash
+curl -X POST -F "file=@path_to_image.jpg" http://localhost:5000/predict
+```
+
+**Response Example**:
+
+```json
+{
+    "confidence": 0.45110172033309937,
+    "confidence_percentage": "45.11%",
+    "predicted_class": "meningioma_tumor",
+    "predicted_class_index": 1
+}
+```
 
 ## License
 
